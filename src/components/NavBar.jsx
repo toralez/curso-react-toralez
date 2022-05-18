@@ -38,7 +38,7 @@ const NavBar = () => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar sx={{background: "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,0,0,1) 100%)",}} position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <VideogameAssetSharpIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -50,14 +50,14 @@ const NavBar = () => {
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
+              fontFamily: 'initial',
               fontWeight: 700,
               letterSpacing: '.2rem',
               color: 'inherit',
               textDecoration: 'none',
             }}
           >
-            ONE RING
+            One Ring
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
