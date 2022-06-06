@@ -1,22 +1,22 @@
+//@ts-check
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/system';
 import BadgeUnstyled, { badgeUnstyledClasses } from '@mui/base/BadgeUnstyled';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Link } from 'react-router-dom';
 
 const StyledBadge = styled(BadgeUnstyled)`
   box-sizing: border-box;
-  margin: 0 10px 0 0;
-  padding: 8px;
-  color: white;
+  margin: 0 15px 0 0;
+  padding: 4px;
+  color: #e4a101;
   font-size: 14px;
   list-style: none;
   font-family: IBM Plex Sans, sans-serif;
   position: relative;
   display: inline-block;
   line-height: 1;
-  background: #bdbdbd;
-  border-radius: 50%;
 
   & .${badgeUnstyledClasses.badge} {
     z-index: auto;
@@ -44,11 +44,13 @@ const StyledBadge = styled(BadgeUnstyled)`
   }
 `;
 
-export default function CartWidget() {
+export default function CartWidget({ cartCount }) {
   return (
     <Stack spacing={4} direction="row">
-      <StyledBadge badgeContent={4} showZero>
-        <ShoppingCartIcon />
+      <StyledBadge badgeContent={ cartCount } showZero>
+        <Link to="/cart" style={{color: 'inherit',}}>
+          <ShoppingCartIcon />
+        </Link>
       </StyledBadge>
     </Stack>
   );

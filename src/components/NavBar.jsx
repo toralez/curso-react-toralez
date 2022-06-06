@@ -1,3 +1,4 @@
+//@ts-check
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -14,13 +15,15 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import VideogameAssetSharpIcon from '@mui/icons-material/VideogameAssetSharp';
 import CartWidget from './CartWidget';
+import { cartContext } from '../Contexts/CartContext';
+import { Link as RouterLink } from 'react-router-dom';
 
-const pages = ['Categorías', 'Carrito', 'Contacto'];
 const settings = ['Perfil', 'Salir'];
 
 const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const { cartCount } = React.useContext(cartContext);  
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -37,16 +40,24 @@ const NavBar = () => {
     setAnchorElUser(null);
   };
 
+  const open = Boolean(anchorElNav);
+  const handleClick = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorElNav(null);
+  };
+
   return (
-    <AppBar sx={{background: "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,0,0,1) 100%)",}} position="static">
+    <AppBar  position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <VideogameAssetSharpIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="/"
+            component={RouterLink}
+            to="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -71,30 +82,6 @@ const NavBar = () => {
             >
               <MenuIcon />
             </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
@@ -116,18 +103,38 @@ const NavBar = () => {
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
+            <Button
+              id="basic-button"
+              aria-controls={open ? 'basic-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? 'true' : undefined}
+              onClick={handleClick}
+              sx={{ my: 2, color: 'white', display: 'block', }}
+            >
+              Categorías
+            </Button>
+            <Button
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: 'white', display: 'block' }}
+            >
+              Contacto
+            </Button>
+            <Menu
+        id="basic-menu"
+        anchorEl={anchorElNav}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem component={RouterLink} to='/categoria/consolas' onClick={handleClose}>Consolas</MenuItem>
+        <MenuItem component={RouterLink} to='/categoria/accesorios' onClick={handleClose}>Accesorios</MenuItem>
+        <MenuItem component={RouterLink} to='/categoria/juegos' onClick={handleClose}>Juegos</MenuItem>
+      </Menu>
           </Box>
 
-          <CartWidget />
+          <CartWidget cartCount={ cartCount() } />
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">

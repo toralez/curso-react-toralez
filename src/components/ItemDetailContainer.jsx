@@ -1,30 +1,38 @@
+//@ts-check
 import React, {useState, useEffect} from 'react'
+import { useParams } from 'react-router-dom';
 import ItemDetail from './ItemDetail';
+import { doc, getDoc, getFirestore } from 'firebase/firestore';
+import { LinearProgress } from '@mui/material';
+import Error404 from './Error404';
 
 export default function ItemDetailContainer() {
     const [item, setItem] = useState({});
+    const {id} = useParams();
+    const [loading, setLoading] = useState({});
 
-    useEffect(() => {
+      useEffect(() => {
+        setLoading(true);
     
-      const getItem = new Promise((res, rej) => {
-          setTimeout(() => {
-              res(
-                {
-                    id: 1,
-                    title: "Joy-Con",
-                    price: "10000",
-                    stock: 9,
-                    description: "Set de controles Joy-Con que cuenta con un diseño especial. El Joy-Con derecho está inspirado en la Espada Maestra, mientras que el control izquierdo está inspirado en el escudo hyliano.",
-                    pictureUrl: 'https://assets.nintendo.com/image/upload/b_white,c_pad,f_auto,h_382,q_auto,w_573/ncom/en_US/hardware/switch/accessories/joy-con-l-r-the-legend-of-zelda-skyward-sword-hd-edition/joy-con-pkg?v=2022042115'
-                });
-          }, 2000);
-        });
-        console.log(getItem);
-  
-        getItem.then(result => setItem(result));
+        const db = getFirestore();
+        let productFB = id ? doc(db, 'products', id) :
+          doc(db, "products");
+        getDoc(productFB).then((item) => {
+          
+        console.log(item.exists() );
+        if(item.exists()){
+          setItem({ id: item.id, ...item.data() });}
+        })
+        .catch(e => console.log(e))
+        .finally(() => setLoading(false));
+        
       }, []);
     
     return (
-        <ItemDetail product={item} />
+      <>
+        {loading ? <LinearProgress /> :
+         <> { item === {} ? <Error404 /> : <ItemDetail item={item} /> } </>
+        }
+      </>
     )
 }

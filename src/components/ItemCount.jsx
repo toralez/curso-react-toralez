@@ -1,3 +1,4 @@
+//@ts-check
 import React, { useState } from 'react'
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
@@ -5,15 +6,19 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import Box from '@mui/material/Box';
 import Snackbar from '@mui/material/Snackbar';
+import { Alert } from '@mui/material';
 
-export default function ItemCount(props) {
+export default function ItemCount( props) {
   const [count, setCount] = useState(1);
   const [open, setOpen] = useState(false);
-  const [total, setTotal] = useState(0)
+  const [total, setTotal] = useState(0);
+  const [disable, setDisable] = useState(false);
 
   const handleClick = () => {
     setOpen(true);
     setTotal(count);
+    setDisable(true);
+    props.onAdd(count);
   };
 
   const handleClose = () => {
@@ -23,7 +28,7 @@ export default function ItemCount(props) {
   
   return (
     <Box>
-        <ButtonGroup disabled={ props.stock < props.initial ? true : false }>
+        <ButtonGroup disabled={ (props.stock < props.initial) || disable }>
           <Button
             aria-label="Menos"
             onClick={() => {
@@ -49,8 +54,13 @@ export default function ItemCount(props) {
         open={open}
         autoHideDuration={3000}
         onClose={handleClose}
-        message= { total === "1" ? "Se añadió 1 artículo al carrito" : `Se añadieron ${total} artículos al carrito` }
-      />
+        >
+          <Alert onClose={handleClose} 
+          severity="success" 
+          sx={{ width: '100%',}}>
+          { total === 1 ? "Se añadió 1 artículo al carrito" : `Se añadieron ${total} artículos al carrito` }
+        </Alert>
+      </Snackbar>
     </Box>
   )
 }
