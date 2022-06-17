@@ -37,7 +37,7 @@ export default function ItemCount( props) {
           >
             <RemoveIcon fontSize="small" />
           </Button>
-          <Button>
+          <Button sx={{fontFamily: 'inherit',}}>
               {count}
           </Button>
           <Button

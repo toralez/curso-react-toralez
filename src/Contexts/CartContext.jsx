@@ -1,6 +1,5 @@
 //@ts-check
 import React, { useEffect, useState, createContext } from 'react';
-//import { cartContext } from '../App';
 
 
 export const cartContext = createContext(undefined);

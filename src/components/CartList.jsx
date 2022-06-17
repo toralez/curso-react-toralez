@@ -16,13 +16,13 @@ export default function CartList() {
   const { cart, removeItem, cartCount, clearCart } = useContext(cartContext);
 
   function total(items) {
-    return items.map(({ price }) => price).reduce((sum, i) => sum + Number(i), 0);
+    return items.map(({ price, quantity }) => price * quantity).reduce((sum, i) => sum + Number(i), 0);
   }
 
   if(cartCount() > 0){
     return (
         <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table sx={{ minWidth: 650, }} aria-label="simple table">
             <TableHead>
             <TableRow>
                 <TableCell></TableCell>
@@ -34,6 +34,7 @@ export default function CartList() {
             </TableRow>
             </TableHead>
             <TableBody>
+            {console.log(cart)}
             {cart.map((row) => (
                 <TableRow
                 key={row.id}

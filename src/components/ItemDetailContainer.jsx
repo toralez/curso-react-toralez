@@ -3,8 +3,9 @@ import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router-dom';
 import ItemDetail from './ItemDetail';
 import { doc, getDoc, getFirestore } from 'firebase/firestore';
-import { LinearProgress } from '@mui/material';
+import { Grid, LinearProgress } from '@mui/material';
 import Error404 from './Error404';
+import Sidebar from './Sidebar';
 
 export default function ItemDetailContainer() {
     const [item, setItem] = useState({});
@@ -18,8 +19,7 @@ export default function ItemDetailContainer() {
         let productFB = id ? doc(db, 'products', id) :
           doc(db, "products");
         getDoc(productFB).then((item) => {
-          
-        console.log(item.exists() );
+        
         if(item.exists()){
           setItem({ id: item.id, ...item.data() });}
         })
@@ -31,7 +31,18 @@ export default function ItemDetailContainer() {
     return (
       <>
         {loading ? <LinearProgress /> :
-         <> { item === {} ? <Error404 /> : <ItemDetail item={item} /> } </>
+          <> { item === {} ? <Error404 /> : 
+              <Grid container>
+                <Grid item md={9}>
+                  <ItemDetail item={item} />
+                </Grid>
+                <Grid item md={3}>
+                  <Sidebar />
+                </Grid>
+              </Grid>
+            }
+
+          </>
         }
       </>
     )

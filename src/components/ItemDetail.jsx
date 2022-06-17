@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import { Grid, Rating, Typography } from '@mui/material';
 import ItemCount from './ItemCount';
 import { cartContext } from '../Contexts/CartContext';
+import ItemBreadcrums from './ItemBreadcrums';
 
 export default function ItemDetail({item}) {
   const [value, setValue] = useState(2);
@@ -33,8 +34,9 @@ export default function ItemDetail({item}) {
 
   return (
     <Grid container spacing={2} direction="row" justifyContent="center" alignItems="stretch"
-    sx={{display:"flex", margin: "10px auto", maxWidth: "90%", background: "#272727", borderRadius: "10px",}}>
+    sx={{display:"flex", margin: "10px auto", maxWidth: "90%", background: "#272727e0", borderRadius: "3px",}}>
         <Grid item xs={12} md={6}>
+          <ItemBreadcrums item={item} />
             <Box component="img" sx={{border: "solid 1px #ccc", maxWidth: "100%", borderRadius: "5px",}}
             alt={item.description}
             src={item.pictureUrl} />

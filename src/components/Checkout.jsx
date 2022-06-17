@@ -1,6 +1,6 @@
 import { Button, Grid, TextField } from '@mui/material';
 import React, { useContext, useState } from 'react';
-import { addDoc, getFirestore, serverTimestamp, collection } from "firebase/firestore";
+import { doc, addDoc, updateDoc, getFirestore, serverTimestamp, collection, increment } from "firebase/firestore";
 import { cartContext } from '../Contexts/CartContext';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -14,7 +14,6 @@ export default function Checkout() {
   const { cart, clearCart } = useContext(cartContext);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  const [submit, setSubmit] = useState(false);
   const newOrder = { buyer: {}, items: [], total: 0, time: '' };
   const defaultValues = {
     name: null,
@@ -52,20 +51,31 @@ export default function Checkout() {
   }
 
   const sendOrder = async () => {
-    if(formValues.name !== "" && formValues.phone !== "" && formValues.email !== "" && submit){ 
-      setSubmit(false);
+    if(formValues.name != null && formValues.name !== "" && formValues.phone != null && formValues.phone !== "" && formValues.email != null && formValues.email !== ""){
       newOrder.buyer = formValues;
-      newOrder.items = cart;
-      newOrder.total = cart.map(({ price }) => price).reduce((sum, i) => sum + Number(i), 0);
+      newOrder.items = cart.map(product => (
+          {
+            id: product.id,
+            title: product.title,
+            price: product.price,
+            quantity: product.quantity,
+          }
+        ));
+      newOrder.total = cart.map(({ price, quantity }) => price * quantity).reduce((sum, i) => sum + Number(i), 0);
       newOrder.time = serverTimestamp();
 
       const db = getFirestore();
+      
       const orders = collection(db, "orders");
       await addDoc(orders, newOrder).then(({id}) => setId(id));
+      await newOrder.items.map( product => 
+         updateDoc( doc(db, 'products', product.id), {
+          stock: increment( (-1) * product.quantity )
+        } )
+      );
+      
       handleOpen();
     }else{
-      setSubmit(false);
-      console.log("error");
       let newValues = {...formValues};
       if (formValues.name === null) {
         newValues = {
@@ -83,18 +93,11 @@ export default function Checkout() {
         email: "",
       };}
       setFormValues(newValues);
-      console.log(formValues.email === "" ? "es string vacio" : "no lo es");
     }
-  }
-
-  /*useEffect(() => {
-    sendOrder();
-  }, [])*/
-  
+  }  
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setSubmit(true);
     sendOrder();
   };
 

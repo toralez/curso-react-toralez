@@ -1,5 +1,5 @@
 //@ts-check
-import * as React from 'react';
+import React, { useContext, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,22 +12,66 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
+import TvIcon from '@mui/icons-material/Tv';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
+import GamesIcon from '@mui/icons-material/Games';
 import VideogameAssetSharpIcon from '@mui/icons-material/VideogameAssetSharp';
 import CartWidget from './CartWidget';
 import { cartContext } from '../Contexts/CartContext';
 import { Link as RouterLink } from 'react-router-dom';
+import { Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 
 const settings = ['Perfil', 'Salir'];
 
 const NavBar = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const { cartCount } = React.useContext(cartContext);  
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const { cartCount } = useContext(cartContext);  
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
+  const toggleDrawer = (open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+
+    setAnchorElNav( open );
   };
+
+  const list = (
+    <Box
+      sx={{ width: 'auto' }}
+      role="presentation"
+      onClick={toggleDrawer(false)}
+      onKeyDown={toggleDrawer(false)}
+    >
+      <List>
+          <ListItem disablePadding>
+            <ListItemButton component={RouterLink} to='/categoria/consolas'>
+              <ListItemIcon>
+                <TvIcon />
+              </ListItemIcon>
+              <ListItemText primary='Consolas' />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton component={RouterLink} to='/categoria/accesorios'>
+              <ListItemIcon>
+                <SportsEsportsIcon />
+              </ListItemIcon>
+              <ListItemText primary='Accesorios' />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton component={RouterLink} to='/categoria/juegos'>
+              <ListItemIcon>
+                <GamesIcon />
+              </ListItemIcon>
+              <ListItemText primary='Juegos' />
+            </ListItemButton>
+          </ListItem>
+      </List>
+    </Box>
+  );
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -40,13 +84,6 @@ const NavBar = () => {
     setAnchorElUser(null);
   };
 
-  const open = Boolean(anchorElNav);
-  const handleClick = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorElNav(null);
-  };
 
   return (
     <AppBar  position="static">
@@ -61,14 +98,12 @@ const NavBar = () => {
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
-              fontFamily: 'initial',
-              fontWeight: 700,
-              letterSpacing: '.2rem',
+              fontFamily: "'Joan', serif",
               color: 'inherit',
               textDecoration: 'none',
             }}
           >
-            One Ring
+            ONE RING
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -77,61 +112,61 @@ const NavBar = () => {
               aria-label="cuenta del usuario"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={handleOpenNavMenu}
+              onClick={toggleDrawer(true)}
               color="inherit"
             >
               <MenuIcon />
             </IconButton>
+            <Drawer
+            anchor='bottom'
+            open={anchorElNav}
+            onClose={toggleDrawer(false)}
+          >
+            {list}
+          </Drawer>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <VideogameAssetSharpIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
-            component="a"
-            href=""
+            component={RouterLink}
+            to="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
+              fontFamily: "'Joan', serif",
               color: 'inherit',
               textDecoration: 'none',
             }}
           >
-            LOGO
+            ONE RING
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Button
-              id="basic-button"
-              aria-controls={open ? 'basic-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? 'true' : undefined}
-              onClick={handleClick}
-              sx={{ my: 2, color: 'white', display: 'block', }}
-            >
-              Categorías
-            </Button>
-            <Button
+              component={RouterLink} 
+              to='/categoria/consolas'
               onClick={handleCloseNavMenu}
               sx={{ my: 2, color: 'white', display: 'block' }}
             >
-              Contacto
+              Consolas
             </Button>
-            <Menu
-        id="basic-menu"
-        anchorEl={anchorElNav}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
-        <MenuItem component={RouterLink} to='/categoria/consolas' onClick={handleClose}>Consolas</MenuItem>
-        <MenuItem component={RouterLink} to='/categoria/accesorios' onClick={handleClose}>Accesorios</MenuItem>
-        <MenuItem component={RouterLink} to='/categoria/juegos' onClick={handleClose}>Juegos</MenuItem>
-      </Menu>
+            <Button
+              component={RouterLink} 
+              to='/categoria/accesorios'
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: 'white', display: 'block' }}
+            >
+              Accesorios
+            </Button>
+            <Button
+              component={RouterLink} 
+              to='/categoria/juegos'
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: 'white', display: 'block' }}
+            >
+              Juegos
+            </Button>
           </Box>
 
           <CartWidget cartCount={ cartCount() } />

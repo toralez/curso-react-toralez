@@ -19,7 +19,7 @@ export default function Cart() {
   return(
     <>
       <Typography mt={2} mb={2} variant='h2' align='center'>Carrito de Compras</Typography>
-      <Grid container sx={{maxWidth: '90%', margin: 'auto', justifyContent: 'space-around', alignItems: 'center',}}>
+      <Grid container sx={{maxWidth: '90%', margin: 'auto', justifyContent: 'space-around', alignItems: 'stretch',}}>
           <Grid item sx={{marginTop:'20px',}}>
               <CartList />
               <Box sx={{ display: 'flex', justifyContent: 'flex-end', }}>
