@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/curso-react-toralez/static/css/main.b70272aa.css",
-    "main.js": "/curso-react-toralez/static/js/main.e93c466e.js",
-    "static/js/787.28c52fdd.chunk.js": "/curso-react-toralez/static/js/787.28c52fdd.chunk.js",
-    "index.html": "/curso-react-toralez/index.html",
-    "main.b70272aa.css.map": "/curso-react-toralez/static/css/main.b70272aa.css.map",
-    "main.e93c466e.js.map": "/curso-react-toralez/static/js/main.e93c466e.js.map",
-    "787.28c52fdd.chunk.js.map": "/curso-react-toralez/static/js/787.28c52fdd.chunk.js.map"
+    "main.css": "/curso-react-toralez/public/static/css/main.b70272aa.css",
+    "main.js": "/curso-react-toralez/public/static/js/main.ce07ce58.js",
+    "static/js/787.28c52fdd.chunk.js": "/curso-react-toralez/public/static/js/787.28c52fdd.chunk.js",
+    "index.html": "/curso-react-toralez/public/index.html",
+    "main.b70272aa.css.map": "/curso-react-toralez/public/static/css/main.b70272aa.css.map",
+    "main.ce07ce58.js.map": "/curso-react-toralez/public/static/js/main.ce07ce58.js.map",
+    "787.28c52fdd.chunk.js.map": "/curso-react-toralez/public/static/js/787.28c52fdd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b70272aa.css",
-    "static/js/main.e93c466e.js"
+    "static/js/main.ce07ce58.js"
   ]
 }
