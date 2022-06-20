@@ -17,6 +17,8 @@ El stock es manejado por firestore y se actualiza con cada nueva orden.
 
 Enlace al deploy del proyecto: https://curso-react-toralez.netlify.app.
 
+![Gif de demostración del sitio](public/VideoSitio.gif)
+
 
 ## Tecnologías Utilizadas
 
