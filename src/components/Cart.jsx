@@ -20,13 +20,13 @@ export default function Cart() {
     <>
       <Typography mt={2} mb={2} variant='h2' align='center'>Carrito de Compras</Typography>
       <Grid container sx={{maxWidth: '90%', margin: 'auto', justifyContent: 'space-around', alignItems: 'stretch',}}>
-          <Grid item sx={{marginTop:'20px',}}>
+          <Grid xs={12} md={8} item sx={{marginTop:'20px',}}>
               <CartList />
               <Box sx={{ display: 'flex', justifyContent: 'flex-end', }}>
                 { ((total(cart) !== 0) && hidden === true) && <Button variant="contained" sx={{ margin: '10px', }} onClick={handleClick}>Finalizar Compra</Button> }
               </Box>
           </Grid>
-          { !hidden && (total(cart) !== 0) && <Grid item sx={{marginTop:'20px', padding: '10px', background: '#1e1e1e', borderRadius: '5px',}}>
+          { !hidden && (total(cart) !== 0) && <Grid md={3} item sx={{marginTop:'20px', padding: '10px', background: '#1e1e1e', borderRadius: '5px',}}>
               <Typography variant='h5'>Detalles de pedido</Typography>
               <Checkout />
             </Grid>

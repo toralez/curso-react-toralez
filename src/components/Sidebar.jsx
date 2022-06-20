@@ -4,20 +4,14 @@ import TvIcon from '@mui/icons-material/Tv';
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import GamesIcon from '@mui/icons-material/Games';
 import DeleteIcon from '@mui/icons-material/Delete';
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { cartContext } from '../Contexts/CartContext';
 import { Link as RouterLink } from 'react-router-dom';
 
-export default function Sidebar(props) {
+export default function Sidebar() {
   const { cart, removeItem, cartCount } = useContext(cartContext);
   const drawerWidth = 240;
 
-  const { window } = props;
-  const [mobileOpen, setMobileOpen] = useState(false);
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
 
   const drawer = (
     <div>
@@ -81,8 +75,6 @@ export default function Sidebar(props) {
       }
     </div>
   );
-
-  const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
     <Box marginTop={4} sx={{ display: 'flex', justifyContent: 'flex-end', }}>

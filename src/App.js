@@ -9,7 +9,6 @@ import { OneRingTheme } from './DarkThemeConfig';
 import { CssBaseline } from '@mui/material';
 import CartContext from './Contexts/CartContext';
 import Cart from './components/Cart';
-import Checkout from './components/Checkout';
 import Error404 from './components/Error404';
 
 function App() {
@@ -26,7 +25,6 @@ function App() {
             <Route path="/producto/:id" element={<ItemDetailContainer />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/*" element={<Error404 />} />
-            <Route path="/checkout" element={<Checkout />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

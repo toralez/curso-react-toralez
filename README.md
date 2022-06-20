@@ -1,71 +1,115 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# One Ring Store
 
-## Available Scripts
+Proyecto desarrollado en el curso de React Js de Coderhouse.
+
+Consiste en un ecommerce de venta de consolas y videojuegos. Cuenta con la posibilidad de ordenar por nombre y precio los productos. También de filtrar por las distintas categorías.
+
+Simula el proceso completo de compra de productos, desde la selección hasta el envío del formulario con los datos del comprador.
+
+Al añadir productos al carrito se verá el número total en la barra superior.
+
+Si se ingresa al carrito estando vacio, se mostrara un mensaje de que no hay productos deleccionados y un botón para vovler al home.
+
+Tanto los datos de los productos como las órdenes de compra son almacenadas en firebase.
+
+El stock es manejado por firestore y se actualiza con cada nueva orden.
+
+Enlace al deploy del proyecto: https://curso-react-toralez.netlify.app.
 
 
-In the project directory, you can run:
+## Tecnologías Utilizadas
 
-### `npm start`
+- React
+- Material UI
+- React Router Dom
+- Firebase
+- Netlify
+## Ejecución
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Para ejecutar el proyecto puede descargarlo o clonarlo desde:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+  git clone https://github.com/toralez/curso-react-toralez.git
+  cd curso-react-toralez
+```
 
-### `npm run build`
+Luego instalar las dependencias:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+  npm install
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+El proyecto se crea en firestore con la colección **products**, que almacena los datos de los productos de la tienda (title, price, stock, description, pictureUrl, category).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**Ejemplo:**
 
-### `npm run eject`
+Luego instalar las dependencias:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```
+  {
+    title: "Consola Switch Lite",
+    price: "58000",
+    stock: 5,
+    description: "Consola portatil",
+    pictureUrl: 'https://assets.com/image/hardware/consola-switch-lite',
+    category: 'consolas',
+  }
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+La colección **orders** se generará automaticamente cuando se cree la primera orden.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+**Ejemplo:**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```
+  {
+    buyer:
+      {
+        name:"Dante",
+        phone:"654321",
+        email:"dante@dominio.com"
+      },
+    items:
+      [
+        {
+          "id":"y7pKHq9DTONenTrwc2Yf",
+          "title":"Mando Pro",
+          "price":"14900",
+          "quantity":2
+        },
+        {
+          "id":"b8gGiO2SC7cl9DGNxuEl",
+          "title":"Joy-Con",
+          "price":"10000",
+          "quantity":1
+        },
+      ],
+    "total":52300,
+    "time":"19 de junio de 2022, 10:21:36 UTC-3"
+  }
+```
+## Consideraciones
 
-## Learn More
+**Material UI**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Se seleccionó Material UI ya que es una librería con una rápida curva de aprendizaje y con la cual se pueden generar diseños modernos y profesionales.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Se usa, con algunas modificaciones, el tema **dark** provisto por esta librería.
 
-### Code Splitting
+**Barra lateral**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Junto con las categorías de los productos, se podrá ver la imagen y el título de los productos a medida que se añadan al carrito.
 
-### Analyzing the Bundle Size
+**Formulario de compra**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Cuenta con verificación en los campos para asegurarse de que todos estén completos y que el formato del correo sea el adecuado.
 
-### Making a Progressive Web App
+**Firebase**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Se almacenan en firebase todos los datos relacionados a los productos y las ordenes de compra generadas.
 
-### Advanced Configuration
+**Netlify**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Se utiliza la plataforma Netlify para alojar una versión de demostración del sitio.

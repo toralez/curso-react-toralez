@@ -34,7 +34,6 @@ export default function CartList() {
             </TableRow>
             </TableHead>
             <TableBody>
-            {console.log(cart)}
             {cart.map((row) => (
                 <TableRow
                 key={row.id}

@@ -36,7 +36,7 @@ export default function ItemDetailContainer() {
                 <Grid item md={9}>
                   <ItemDetail item={item} />
                 </Grid>
-                <Grid item md={3}>
+                <Grid item xs={12} md={3}>
                   <Sidebar />
                 </Grid>
               </Grid>
